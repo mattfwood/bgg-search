@@ -16,12 +16,8 @@ const Image = styled.img`
 const Grid = styled.div`
   display: grid;
   grid-gap: 10px;
-  /* grid-template-columns: repeat(auto-fill, minmax(200px, 400px)); */
-  /* grid-template-columns: minmax(200px, 500px) 1fr; */
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  /* align-items: center; */
   justify-items: center;
-  /* align-content: center; */
 `;
 
 const Title = styled.h1`
