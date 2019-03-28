@@ -25,7 +25,7 @@ const api = {
     return parsed.items.item;
   },
   get: async id => {
-    const res = await instance.get(`thing?id=${id}`);
+    const res = await instance.get(`thing?id=${id}&stats=1`);
     const parsed = await parse(res.data);
 
     try {

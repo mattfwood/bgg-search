@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Search from './Search';
 
 const links = [
   { href: 'https://github.com/segmentio/create-next-app', label: 'Github' },
@@ -16,7 +17,8 @@ const Nav = () => (
           <a>Home</a>
         </Link>
       </li>
-      <ul>
+      <Search />
+      {/* <ul>
         {links.map(({ key, href, label }) => (
           <li key={key}>
             <Link href={href}>
@@ -24,7 +26,7 @@ const Nav = () => (
             </Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </ul>
 
     <style jsx>{`

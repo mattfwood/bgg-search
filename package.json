@@ -7,11 +7,14 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "debounce-promise": "^3.1.0",
     "eslint": "^5.15.3",
     "eslint-config-cratebind": "^1.0.5",
+    "lodash.debounce": "^4.0.8",
     "next": "^8.0.3",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
+    "react-select": "^2.4.2",
     "styled-components": "^4.2.0",
     "xml2js": "^0.4.19"
   },

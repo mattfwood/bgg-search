@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
-  input {
+  /* input {
     border-radius: 4px;
     border: 1px solid #d9d9d9;
     font-size: 16px;
@@ -18,11 +18,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0 8px;
 
     &:focus {
-      /* border-color: #80bdff; */
       outline: 0;
       box-shadow: 0 0 0 0.2rem rgba(54, 79, 107, 0.25);
     }
-  }
+  } */
 
   button {
     display: inline-flex;

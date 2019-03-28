@@ -1,73 +1,110 @@
 import React from 'react';
-import Link from 'next/link';
+import styled from 'styled-components';
 import Head from '../components/head';
 import Nav from '../components/nav';
-import Search from '../components/Search';
 import api from '../api';
 import Page from '../components/Page';
 
-const GamePage = ({ game }) => (
-  <div>
-    <Head title="Home" />
-    <Nav />
+const GamePageStyles = styled.div``;
 
-    <Page>
-      <Search />
-      <h1>{game.name[0].$.value}</h1>
-      <p>{game.description[0]}</p>
-    </Page>
+const Image = styled.img`
+  max-width: 100%;
+  height: auto;
+  padding-bottom: 10px;
+`;
 
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title,
-      .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
-  </div>
-);
+const Grid = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 400px));
+`;
+
+const Title = styled.h1`
+  margin: 0;
+`;
+
+const GameDetails = styled.div`
+  /* padding: 10px 0; */
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  margin: 20px 0;
+`;
+
+const Label = styled.span`
+  font-weight: 700;
+`;
+
+const DetailSection = styled.div`
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+
+  :last-child {
+    border-bottom: 0;
+  }
+`;
+
+const calcGameLength = (minimum, max) => {
+  // if min and max are the same, don't show twice
+  if (minimum === max) {
+    return `${minimum} min`;
+  }
+
+  return `${minimum} min - ${max} min`;
+};
+
+const groupBy = (data, key) => {
+  const result = {};
+
+  data.forEach(item => {
+    if (result[item.$.type]) {
+      result[item.$.type].push(item.$);
+    } else {
+      result[item.$.type] = [item.$];
+    }
+  });
+
+  return result;
+};
+
+const GamePage = ({ game }) => {
+  console.log(groupBy(game.link, 'type'));
+  return (
+    <GamePageStyles>
+      <Head title="Home" />
+      <Nav />
+
+      <Page>
+        <Grid>
+          <Image src={game.image[0]} alt={game.name[0].$.value} />
+          <div>
+            <Title>{game.name[0].$.value}</Title>
+            <small>({game.yearpublished[0].$.value})</small>
+            <GameDetails>
+              <DetailSection>
+                <Label> Players: </Label> {game.minplayers[0].$.value} -{' '}
+                {game.maxplayers[0].$.value}
+              </DetailSection>
+              <DetailSection>
+                <Label> Game Length: </Label>{' '}
+                {calcGameLength(
+                  game.minplaytime[0].$.value,
+                  game.maxplaytime[0].$.value
+                )}
+              </DetailSection>
+              <DetailSection>
+                <Label>Complexity: </Label>{' '}
+                {game.statistics[0].ratings[0].averageweight[0].$.value} / 5
+              </DetailSection>
+            </GameDetails>
+            <p dangerouslySetInnerHTML={{ __html: game.description[0] }} />
+          </div>
+        </Grid>
+      </Page>
+    </GamePageStyles>
+  );
+};
 
 GamePage.getInitialProps = async ({ query }) => {
-  console.log(query);
   const game = await api.get(query.id);
   return {
     game,
